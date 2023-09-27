@@ -1,8 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/pdv2323/otp/temp"
+)
 
 func main() {
-	fmt.Println("This is OTP generator code.")
-	fmt.Println("Let's get started with this.")
+	r := gin.Default()
+
+	r.GET("/home", temp.Print)
+
+	r.Run(":8888")
 }
