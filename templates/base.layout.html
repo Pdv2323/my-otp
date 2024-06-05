@@ -1,0 +1,40 @@
+{{define "base"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+</head>
+
+<body>
+
+    {{block "content" .}}
+
+    {{end}}
+
+    <div class="row my-footer">
+        <div class="col">
+            Left
+        </div>
+        <div class="col">
+            Middle
+        </div>
+        <div class="col">
+            Right
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+
+    {{block "js" .}}
+
+    {{end}}
+</body>
+
+</html>
+
+{{end}}

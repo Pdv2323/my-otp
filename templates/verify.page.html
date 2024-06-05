@@ -1,0 +1,11 @@
+{{template "base" .}}
+
+{{define "content"}}
+<center>
+    <h1>Tell me your OTP !!!</h1>
+    <input id="otp" type="number">
+    <form onsubmit="redirectToLink(event)">
+        <button type="submit">Submit</button>
+    </form>
+</center>
+{{end}}

@@ -1,0 +1,13 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<center>
+    <h1>Please enter your email</h1>
+    <input id="email" type="email">
+    <form onsubmit="redirectToLink(event)">
+        <button type="submit">Submit</button>
+    </form>
+</center>
+
+{{end}}
