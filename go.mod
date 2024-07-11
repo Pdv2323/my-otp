@@ -1,3 +1,3 @@
-module github.com/Pdv2323/otp
+module github.com/Pdv2323/my-otp
 
-go 1.18
+go 1.20
