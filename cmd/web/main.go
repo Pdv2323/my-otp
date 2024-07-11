@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/Pdv2323/otp/cmd/web/email"
-	"github.com/Pdv2323/otp/cmd/web/generate"
-	"github.com/Pdv2323/otp/cmd/web/verify"
+	"github.com/Pdv2323/my-otp/cmd/web/email"
+	"github.com/Pdv2323/my-otp/cmd/web/generate"
+	"github.com/Pdv2323/my-otp/cmd/web/verify"
 )
 
 func main() {

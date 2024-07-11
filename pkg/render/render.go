@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/Pdv2323/otp/pkg/config"
-	"github.com/Pdv2323/otp/pkg/models"
+	"github.com/Pdv2323/my-otp/pkg/config"
+	"github.com/Pdv2323/my-otp/pkg/models"
 	"github.com/justinas/nosurf"
 )
 

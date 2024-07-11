@@ -1,11 +1,13 @@
-module github.com/Pdv2323/otp
+module github.com/Pdv2323/my-otp
 
 go 1.20
 
-require github.com/gin-gonic/gin v1.10.0
-
 require (
 	github.com/alexedwards/scs/v2 v2.8.0
+	github.com/gin-gonic/gin v1.10.0
+)
+
+require (
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
