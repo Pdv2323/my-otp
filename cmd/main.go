@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/parthvinchhi/my-otp/pkg/handlers"
 )
 
@@ -32,12 +32,33 @@ import (
 
 // }
 
-func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", handlers.RenderIndexPageHandler)
-	mux.HandleFunc("/submit-email", handlers.SubmitEmailIdHandler)
-	mux.HandleFunc("/submit-otp", handlers.SubmitOtpHandler)
+// func main() {
+// 	mux := http.NewServeMux()
+// 	mux.HandleFunc("/", handlers.RenderIndexPageHandler)
+// 	mux.HandleFunc("/submit-email", handlers.SubmitEmailIdHandler)
+// 	mux.HandleFunc("/submit-otp", handlers.SubmitOTPHandler)
 
-	fmt.Println("Starting server on :8888")
-	http.ListenAndServe(":8888", mux)
+// 	fmt.Println("Starting server on :8888")
+// 	http.ListenAndServe(":8888", mux)
+// }
+
+func main() {
+	r := gin.Default()
+
+	indexFile := "pkg/templates/index.html"
+	verifyFile := "pkg/templates/verify.html"
+
+	r.LoadHTMLFiles(indexFile, verifyFile)
+
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, indexFile, nil)
+	})
+	r.POST("/submit-email", handlers.SubmitEmailHandler)
+
+	r.GET("/submit-otp", func(c *gin.Context) {
+		c.HTML(http.StatusOK, verifyFile, nil)
+	})
+	r.POST("/submit-otp", handlers.SubmitOtpHandler)
+
+	r.Run(":8888")
 }

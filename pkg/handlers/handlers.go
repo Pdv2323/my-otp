@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/smtp"
 	"reflect"
 	"strconv"
-	"time"
 
-	"golang.org/x/exp/rand"
+	"github.com/gin-gonic/gin"
 )
 
 // type Otp struct {
@@ -31,16 +31,16 @@ func GenerateOtpHandler(n int) int {
 		min *= 10
 	}
 	max := min*10 - 1
+	return rand.Intn(max-min+1) + min
 
 	// rand.Seed(time.Now().UnixNano())
-	t := time.Now().UnixNano()
-	rand.Seed(uint64(t))
-	r := rand.Intn(max-min+1) + min
-	t1 := reflect.TypeOf(r)
-	log.Println(r, t1)
-	return r
+	// t := time.Now().UnixNano()
+	// rand.Seed(uint64(t))
+	// r := rand.Intn(max-min+1) + min
+	// t1 := reflect.TypeOf(r)
+	// log.Println(r, t1)
+	// return r
 	// return string(r)
-
 }
 
 func SendEmailHandler(to string, otp int) error {
@@ -117,7 +117,7 @@ func SubmitEmailIdHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func SubmitOtpHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitOTPHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		OTP := r.FormValue("otp")
 		// ok := VerifyOtpHandler(Otp, OTP)
@@ -172,5 +172,46 @@ func SubmitOtpHandler(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "pkg/templates/verify.html")
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
+}
+
+func SubmitEmailHandler(c *gin.Context) {
+	email := c.PostForm("email")
+	Otp = GenerateOtpHandler(6)
+	err := SendEmailHandler(email, Otp)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": fmt.Sprintf("Failed to send OTP: %v", err),
+		})
+		return
+	}
+
+	c.Redirect(http.StatusSeeOther, "/verify-otp?email="+email)
+}
+
+func SubmitOtpHandler(c *gin.Context) {
+	otp := c.PostForm("otp")
+
+	IntOtp, err := strconv.Atoi(otp)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "Failed to convert String otp to Int otp.",
+		})
+	}
+
+	if IntOtp == Otp {
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "success",
+			"message": "OTP verified Successfully.",
+		})
+	} else {
+		c.JSON(http.StatusNotAcceptable, gin.H{
+			"status":  "error",
+			"message": "Wrong OTP. Please enter correct OTP.",
+		})
+
+		return
 	}
 }
