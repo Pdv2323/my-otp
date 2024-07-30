@@ -5,9 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/Pdv2323/my-otp/email"
-	"github.com/Pdv2323/my-otp/generate"
-	"github.com/Pdv2323/my-otp/verify"
+	"github.com/parthvinchhi/my-otp/pkg/handlers"
 )
 
 func main() {
@@ -15,9 +13,9 @@ func main() {
 	fmt.Print("Enter your email: ")
 	fmt.Scanln(&userEmail)
 
-	otp := generate.GenerateOtp()
+	otp := handlers.GenerateOtpHandler(6)
 
-	err := email.SendEmail(userEmail, otp)
+	err := handlers.SendEmailHandler(userEmail, otp)
 	if err != nil {
 		log.Fatalf("Error sending email to %s.", userEmail)
 	}
@@ -30,7 +28,7 @@ func main() {
 	fmt.Print("Enter the Otp you received : ")
 	fmt.Scan(&NewOtp)
 
-	v := verify.VerifyOtp(otp, NewOtp)
+	v := handlers.VerifyOtpHandler(otp, NewOtp)
 	fmt.Println(v)
 
 }
