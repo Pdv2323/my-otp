@@ -8,16 +8,17 @@ import (
 	"net/http"
 	"net/smtp"
 	"reflect"
+	"strconv"
 	"time"
 
 	"golang.org/x/exp/rand"
 )
 
-type Otp struct {
-	Otp string
-}
+// type Otp struct {
+// 	Otp string
+// }
 
-var Otp string
+var Otp int
 
 func GenerateOtpHandler(n int) int {
 	if n < 1 {
@@ -42,13 +43,13 @@ func GenerateOtpHandler(n int) int {
 
 }
 
-func SendEmailHandler(to string, otp string) error {
+func SendEmailHandler(to string, otp int) error {
 	from := "parthdv2111@gmail.com"
 	password := "dwvntkfkeqnejzco"
 	SmtpServer := "smtp.gmail.com"
 	SmtpPort := "587"
 
-	msg := fmt.Sprintf("Subject : OTP Verification\n\n Your OTP is : %s", otp)
+	msg := fmt.Sprintf("Subject : OTP Verification\n\n Your OTP is : %d", otp)
 
 	auth := smtp.PlainAuth("", from, password, SmtpServer)
 
@@ -140,7 +141,12 @@ func SubmitOtpHandler(w http.ResponseWriter, r *http.Request) {
 		// 	json.NewEncoder(w).Encode(Response)
 		// }
 
-		if OTP != Otp {
+		IntOtp, err := strconv.Atoi(OTP)
+		if err != nil {
+			log.Fatal("Error converting string to int")
+		}
+
+		if IntOtp != Otp {
 			t1 := reflect.TypeOf(OTP)
 			t2 := reflect.TypeOf(Otp)
 
