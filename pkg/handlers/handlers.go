@@ -1,4 +1,4 @@
-package handler
+package handlers
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 
 var Otp int
 
-func GenerateOtpHandler(n int) int {
+func generateOtpHandler(n int) int {
 	if n < 1 {
 		return 0
 		// return string(0)
@@ -49,7 +49,7 @@ func SendEmailHandler(to string, otp int) error {
 
 func SubmitEmailHandler(c *gin.Context) {
 	email := c.PostForm("email")
-	Otp = GenerateOtpHandler(6)
+	Otp = generateOtpHandler(6)
 	err := SendEmailHandler(email, Otp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
