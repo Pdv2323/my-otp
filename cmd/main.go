@@ -45,10 +45,15 @@ import (
 func main() {
 	r := gin.Default()
 
-	indexFile := "pkg/templates/index.html"
-	verifyFile := "pkg/templates/verify.html"
+	r.LoadHTMLGlob("pkg/templates/*")
 
-	r.LoadHTMLFiles(indexFile, verifyFile)
+	// indexFile := "pkg/templates/index.html"
+	// verifyFile := "pkg/templates/verify.html"
+
+	indexFile := "index.html"
+	verifyFile := "verify.html"
+
+	// r.LoadHTMLFiles(indexFile, verifyFile)
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, indexFile, nil)
