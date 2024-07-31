@@ -65,5 +65,5 @@ func main() {
 	})
 	r.POST("/submit-otp", handlers.SubmitOtpHandler)
 
-	// r.Run(":8888")
+	r.Run(":1234")
 }

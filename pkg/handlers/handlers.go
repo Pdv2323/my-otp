@@ -187,7 +187,7 @@ func SubmitEmailHandler(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusSeeOther, "/verify-otp?email="+email)
+	c.Redirect(http.StatusSeeOther, "/submit-otp?email="+email)
 }
 
 func SubmitOtpHandler(c *gin.Context) {
